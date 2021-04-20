@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Create Local Folder') {
             steps {
-                bat '''if not exist "F:\\JenkinsCopy\\DotNetSampleWebApp" mkdir F:\\JenkinsCopy\\DotNetSampleWebApp &
+                bat '''@RD /S /Q "F:\\JenkinsCopy\\DotNetSampleWebApp" & if not exist "F:\\JenkinsCopy\\DotNetSampleWebApp" mkdir F:\\JenkinsCopy\\DotNetSampleWebApp &
 				xcopy /s .\\DotNetSampleWebApp F:\\JenkinsCopy\\DotNetSampleWebApp'''
             }
         }
@@ -15,7 +15,7 @@ pipeline {
         }
 		stage('Build') {
             steps {
-                bat "\"${tool 'MSBuild'}\" F:\\JenkinsCopy\\DotNetSampleWebApp\\DotNetSampleWebApp.sln /p:Configuration=Debug /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+                bat "\"${tool 'MSBuild.exe'}\" F:\\JenkinsCopy\\DotNetSampleWebApp\\DotNetSampleWebApp.sln /p:Configuration=Debug /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
             }
         }
 		stage('Archive') {
